@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>موقعي الشخصي</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #0a0a0f;
+      --surface: #13131a;
+      --accent: #00e5ff;
+      --accent2: #7b5ea7;
+      --text: #e8e8f0;
+      --muted: #6b6b80;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Cairo', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 4rem;
+      background: rgba(10,10,15,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(0,229,255,0.08);
+    }
+
+    .logo {
+      font-size: 1.4rem;
+      font-weight: 900;
+      color: var(--accent);
+      letter-spacing: -1px;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2.5rem;
+    }
+
+    nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: color 0.3s;
+    }
+
+    nav a:hover { color: var(--accent); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-end;
+      padding: 0 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -200px; left: -200px;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(0,229,255,0.08) 0%, transparent 70%);
+      animation: pulse 6s ease-in-out infinite;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -200px; right: -200px;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(123,94,167,0.1) 0%, transparent 70%);
+      animation: pulse 8s ease-in-out infinite reverse;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.2); opacity: 0.6; }
+    }
+
+    .hero-content { position: relative; z-index: 1; text-align: right; }
+
+    .greeting {
+      font-size: 1rem;
+      color: var(--accent);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.2s forwards;
+    }
+
+    .hero h1 {
+      font-size: clamp(3rem, 8vw, 6rem);
+      font-weight: 900;
+      line-height: 1.05;
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.4s forwards;
+    }
+
+    .hero h1 span {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      color: var(--muted);
+      max-width: 500px;
+      line-height: 1.8;
+      margin-bottom: 2.5rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.6s forwards;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.9rem 2.5rem;
+      background: transparent;
+      border: 1.5px solid var(--accent);
+      color: var(--accent);
+      text-decoration: none;
+      font-family: 'Cairo', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      border-radius: 4px;
+      transition: all 0.3s;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.8s forwards;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background: var(--accent);
+      color: var(--bg);
+      box-shadow: 0 0 30px rgba(0,229,255,0.3);
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── SECTIONS ── */
+    section {
+      padding: 6rem 4rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-title {
+      font-size: 2rem;
+      font-weight: 900;
+      margin-bottom: 3rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .section-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to left, transparent, var(--accent));
+      opacity: 0.3;
+    }
+
+    .section-title span { color: var(--accent); }
+
+    /* ── ABOUT ── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .about-text p {
+      color: var(--muted);
+      line-height: 2;
+      font-size: 1.05rem;
+      margin-bottom: 1rem;
+    }
+
+    .about-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .stat {
+      background: var(--surface);
+      border: 1px solid rgba(0,229,255,0.1);
+      border-radius: 12px;
+      padding: 1.5rem;
+      text-align: center;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+
+    .stat:hover {
+      border-color: var(--accent);
+      transform: translateY(-4px);
+    }
+
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: var(--accent);
+    }
+
+    .stat-label { color: var(--muted); font-size: 0.9rem; margin-top: 0.3rem; }
+
+    /* ── SKILLS ── */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 1rem;
+    }
+
+    .skill-card {
+      background: var(--surface);
+      border: 1px solid rgba(255,255,255,0.05);
+      border-radius: 12px;
+      padding: 1.5rem 1rem;
+      text-align: center;
+      transition: all 0.3s;
+      cursor: default;
+    }
+
+    .skill-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-6px);
+      box-shadow: 0 10px 30px rgba(0,229,255,0.1);
+    }
+
+    .skill-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+    .skill-name { font-size: 0.9rem; color: var(--muted); }
+
+    /* ── PROJECTS ── */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .project-card {
+      background: var(--surface);
+      border: 1px solid rgba(255,255,255,0.05);
+      border-radius: 16px;
+      padding: 2rem;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(to right, var(--accent), var(--accent2));
+      transform: scaleX(0);
+      transition: transform 0.3s;
+    }
+
+    .project-card:hover::before { transform: scaleX(1); }
+
+    .project-card:hover {
+      border-color: rgba(0,229,255,0.2);
+      transform: translateY(-6px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    }
+
+    .project-tag {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      background: rgba(0,229,255,0.1);
+      color: var(--accent);
+      border-radius: 20px;
+      font-size: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .project-card h3 { font-size: 1.2rem; margin-bottom: 0.75rem; }
+    .project-card p { color: var(--muted); font-size: 0.95rem; line-height: 1.7; }
+
+    /* ── CONTACT ── */
+    .contact-box {
+      background: var(--surface);
+      border: 1px solid rgba(0,229,255,0.1);
+      border-radius: 20px;
+      padding: 3rem;
+      text-align: center;
+    }
+
+    .contact-box p {
+      color: var(--muted);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+      line-height: 1.8;
+    }
+
+    .social-links { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+
+    .social-link {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.7rem 1.5rem;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: all 0.3s;
+    }
+
+    .social-link:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: rgba(0,229,255,0.05);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      color: var(--muted);
+      font-size: 0.85rem;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--accent2); border-radius: 10px; }
+
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      nav ul { gap: 1.2rem; }
+      .hero { padding: 0 1.5rem; align-items: center; text-align: center; }
+      .hero-content { text-align: center; }
+      .hero p { margin: 0 auto 2rem; }
+      section { padding: 4rem 1.5rem; }
+      .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .contact-box { padding: 2rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">&lt;اسمك /&gt;</div>
+  <ul>
+    <li><a href="#about">عني</a></li>
+    <li><a href="#skills">مهاراتي</a></li>
+    <li><a href="#projects">مشاريعي</a></li>
+    <li><a href="#contact">تواصل</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-content">
+    <p class="greeting">مرحباً بك</p>
+    <h1>أنا <span>اسمك</span><br/>مطوّر ويب</h1>
+    <p>أبني تجارب رقمية مميزة باستخدام أحدث التقنيات. شغفي هو تحويل الأفكار إلى مواقع حقيقية.</p>
+    <a href="#projects" class="btn">شوف مشاريعي</a>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <h2 class="section-title"><span>#</span> عني</h2>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>أهلاً! أنا مطور ويب شغوف بصناعة المواقع الإلكترونية وتعلم تقنيات جديدة باستمرار.</p>
+      <p>أبدأت رحلتي في البرمجة بتعلم HTML وCSS، وأسعى دائماً لتطوير مهاراتي وبناء مشاريع حقيقية.</p>
+    </div>
+    <div class="about-stats">
+      <div class="stat">
+        <div class="stat-number">+5</div>
+        <div class="stat-label">مشاريع منجزة</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">1+</div>
+        <div class="stat-label">سنة خبرة</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">∞</div>
+        <div class="stat-label">شغف بالتعلم</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">100%</div>
+        <div class="stat-label">التزام بالجودة</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <h2 class="section-title"><span>#</span> مهاراتي</h2>
+  <div class="skills-grid">
+    <div class="skill-card"><div class="skill-icon">🌐</div><div class="skill-name">HTML5</div></div>
+    <div class="skill-card"><div class="skill-icon">🎨</div><div class="skill-name">CSS3</div></div>
+    <div class="skill-card"><div class="skill-icon">⚡</div><div class="skill-name">JavaScript</div></div>
+    <div class="skill-card"><div class="skill-icon">📱</div><div class="skill-name">Responsive</div></div>
+    <div class="skill-card"><div class="skill-icon">🔧</div><div class="skill-name">Git</div></div>
+    <div class="skill-card"><div class="skill-icon">🚀</div><div class="skill-name">في طور التعلم</div></div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <h2 class="section-title"><span>#</span> مشاريعي</h2>
+  <div class="projects-grid">
+    <div class="project-card">
+      <span class="project-tag">HTML / CSS</span>
+      <h3>موقعي الشخصي</h3>
+      <p>أول موقع أبنيه من الصفر. تعلمت منه أساسيات HTML وتنسيق CSS وكيفية بناء صفحة متجاوبة.</p>
+    </div>
+    <div class="project-card">
+      <span class="project-tag">قريباً</span>
+      <h3>مشروع ثانٍ</h3>
+      <p>دائماً في طور التعلم وبناء مشاريع جديدة. ترقب المزيد قريباً!</p>
+    </div>
+    <div class="project-card">
+      <span class="project-tag">قريباً</span>
+      <h3>مشروع ثالث</h3>
+      <p>كل مشروع جديد هو خطوة إلى الأمام. الرحلة لا تتوقف.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <h2 class="section-title"><span>#</span> تواصل معي</h2>
+  <div class="contact-box">
+    <p>هل عندك مشروع أو فكرة تودّ مناقشتها؟<br/>أنا دائماً مستعد للتواصل والتعاون!</p>
+    <div class="social-links">
+      <a href="mailto:your@email.com" class="social-link">📧 البريد الإلكتروني</a>
+      <a href="#" class="social-link">🐙 GitHub</a>
+      <a href="#" class="social-link">💼 LinkedIn</a>
+      <a href="#" class="social-link">🐦 Twitter/X</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>صنع بـ ❤️ و HTML — جميع الحقوق محفوظة © 2026</p>
+</footer>
+
+</body>
+</html>
